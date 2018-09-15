@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Milestone 1</title>
+<meta charset="UTF-8">
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js">
+</script>
+</head>
+    
+<body>
+    <div id="books">
+    
+    <h1> Google Books</h1>
+    
+    </div>
+    <script>
+    $(Document).ready(function()){
+        $.getJSON("http://it-ebooks-api.info/v1/search/modern%20web", function(data){
+            $("#books").append(data);
+        });
+    });
+    </script>
+    
+    </body>
+
+</html>
