@@ -14,11 +14,10 @@
     
     </div>
     <script>
-    $(Document).ready(function()){
-        $.getJSON("http://it-ebooks-api.info/v1/search/modern%20web", function(data){
-            $("#books").append(data);
-        });
-    });
+    $.getJSON("google-books-book.json", function(res) {
+var data = res["volumeInfo"];
+$("#books").append("<div><img src='"+data["imageLinks"]["small"]+"' alt='"+data["title"]+"'/><span><strong>Title:</strong> "+data["title"]+"</span><br/><span><strong>Subtitle:</strong> "+data["subtitle"]+"</span><br/><span><strong>Author:</strong> "+data["authors"][0]+"</span><br/><span><strong>Description:"+data["description"]+"</div></details></span></br><span><strong>ISBN 10:</strong> "+data["industryIdentifiers"][0]["identifier"]+"</span></br><span><strong>ISBN 13:</strong> "+data["industryIdentifiers"][1]["identifier"]+"</span></div><div class='clear'></div><br/>");
+});
     </script>
     
     </body>
