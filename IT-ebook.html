@@ -11,39 +11,22 @@
         
         body{
             border: 1px solid black;
-            background-color: #497d5d;
-            white-space: normal;
+            background-color: #497d5d
         }
-        #books2{
-            text-align: center;
+        #h1{
+            text-align: center
         }
-        #container{
-            width: auto;
-            margin: 0;
-        }
-        #container span{
-            font-size:20px;
-            text-align: justify;
-        }
-
-        #books{
-            font-size: 20px;
-        }
-        h1{
-            text-align: center;
-        }
-        .title{font-weight: bold}
-        #books.img{
-            margin-left: 10px;
-            float: left;
-            
-            
+        #books2 img{
+           margin-left: 680px;
+            display: block;
+        
             
         }
-        #test{
-            font-weight: 200px;
+        #books2 span{
+            clear: both;
+            white-space:prew;
+            
         }
-        #menu.
 
     </style>
     <h1 id="h1">IT Ebooks</h1>
@@ -53,13 +36,11 @@
  <div id="container">
     <div id="books2"></div>
 <script>
- 
-
-		$(document).ready(function() {
-			$.getJSON("it-ebooks-search.json", function(data) {
-				for (var i = 0; i < data.Books.length; i++) {
-					var data = data.Books[i];
-					$("#books2").append("<div><img src='"+data["Image"]+"' alt='"+data["Title"]+"'/><span><strong>Title:</strong> "+data["Title"]+"</span><br/><span><strong>Subtitle:</strong> "+data["SubTitle"]+"</span><br/><span><strong>Description:</strong> "+data["Description"]+"</span></br><span><strong>ISBN:</strong> "+data["isbn"]+"</span></div><div class='clear'></div><br/>");
+ 	$(document).ready(function() {
+			$.getJSON("it-ebooks-search.json", function(response) {
+				for (var i = 0; i < response.Books.length; i++) {
+					var data = response.Books[i];
+					$("#books2").append("<div><img src='"+data["Image"]+"' alt='"+data["Title"]+"'/><span><strong>Title:</strong> "+data["Title"]+"</span><br/><span><strong>Subtitle:</strong> "+data["SubTitle"]+"</span><br/><span><strong>Description:</strong> "+data["Description"]+"</span></br><span><strong>ISBN:</strong> "+data["isbn"]+"</span></div></div><br/>");
 				}
 			});
 			
@@ -69,3 +50,4 @@
 </div>
     <a href="Milestone1.html" id="menu">Go back to Menu</a>
  </body>
+</html>
