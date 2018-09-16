@@ -1,28 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
 <head>
-<title> IT E-book</title>
-<meta charset="UTF-8">
+<meta charset="utf-8">
+<title>Milestone 1</title>
+<link rel="stylesheet" href="homepage.css">
+<link href='https://fonts.googleapis.com/css?family=Adamina' rel='stylesheet'>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js">
 </script>
 </head>
-    
 <body>
-    <div id="books">
-    
-    <h1> IT E-book</h1>
-    
-    </div>
-    <script>
-   $(Document).ready(function()){
-             $.getJSON("it-ebooks-search.json", function(data){
-       
-             $("books").append(data);
-   });
-         });
-        
-    </script>
-    
-    </body>
 
+<div id="itEbooks">
+<p>Sample Data:</p>
+
+</div>
+
+</body>
+<script>
+//fetches information about a specific book
+$.ajax({
+url: "https://www.googleapis.com/books/v1/volumes/Wfan6L9RGgYC"
+}).done(function(data) {
+$('#itEbooks').append(JSON.stringify(data))
+});
+
+
+</script>
 </html>
