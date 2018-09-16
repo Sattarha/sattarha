@@ -11,21 +11,22 @@
         
         body{
             border: 1px solid black;
-            background-color: #497d5d
+            background-color: #497d5d;
         }
         #h1{
-            text-align: center
+            text-align: center;
+            font-weight: 100;
+            font-family: sans-serif;
         }
         #books2 img{
            margin-left: 850px;
             display: block;
-        
             
         }
         #books2 span{
             clear: both;
-            white-space:prew;
-            
+            font-weight: 100;
+            font-family:sans-serif;
         }
 
     </style>
@@ -40,7 +41,7 @@
 			$.getJSON("it-ebooks-search.json", function(response) {
 				for (var i = 0; i < response.Books.length; i++) {
 					var data = response.Books[i];
-					$("#books2").append("<div><img src='"+data["Image"]+"' alt='"+data["Title"]+"'/><span><strong>Title:</strong> "+data["Title"]+"</span><br/><span><strong>Subtitle:</strong> "+data["SubTitle"]+"</span><br/><span><strong>Description:</strong> "+data["Description"]+"</span></br><span><strong>ISBN:</strong> "+data["isbn"]+"</span></div></div><br/>");
+					$("#books2").append("<div><img src='"+data["Image"]+"' alt='"+data["Title"]+"'/><span><strong>Title:</strong> "+data["Title"]+"</span><br/><span><strong>Subtitle:</strong> "+data["SubTitle"]+"</span><br/><span><strong>Description:</strong> "+data["Description"]+"</span></br><span><strong>ISBN:</strong> "+data["isbn"]+"</span></div><br/>");
 				}
 			});
 			
