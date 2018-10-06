@@ -4,18 +4,39 @@
 <head>
 	<title>Google Books Search</title>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <h1 id="h1">Google book database</h1>
 </head>
+    <style>
+    body{
+        background-color:cornflowerblue;
+        border: 1px solid black;
+            
+        }
+        #h1{
+            text-align: center;
+        }
+        #milestone{
+            float: right;
+        }
+        #milestone:hover{
+        text-transform: uppercase;
+        font-size: 20px;
+        font-weight: bold;
+        transition: font-size .5s ease;
+        }
+        </style>
 <body>
-<form>
-    <input placeholder="Type here" id="search" autofocus="">
+    <input placeholder="Type here..." id="search" autofocus="">
+    
     <button>
-    <a href></a>
-        Click here!
-    </button>
-
-    </form>
+    Click here! </button>
 
 <div id="results" style="display: flex; flex-wrap: wrap;"></div>
+    <h2>Here is your results:<span id="totalresults"></span>  
+    
+    </h2>
+    
 
 <script>
 
@@ -57,6 +78,10 @@ resultHTML+="</div>";
     
 
 </script>
-
+    <div id="Milestone">
+<a href="Milestone2.html">Milestone 2</a>
+        <br />
+<a href="index.html">Home</a>
+        </div>
 </body>
 </html>
