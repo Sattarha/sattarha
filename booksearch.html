@@ -5,21 +5,33 @@
 	<title>Google Books Search</title>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <h1 id="h1">Google book database</h1>
-       <div id="milestone">
-<a href="Milestone2.html">Milestone 2</a>
-        <br />
-<a href="index.html">Home</a>
-        </div>
+    
+    <h1 id="h1">Google book database </h1>
+       
+       
 </head>
     <style>
+    
     body{
-        background-color:cornflowerblue;
-        border: 1px solid black;
-            
+    
+        background-color:dimgray;
+        border: 1px solid black; 
         }
         #h1{
+            color: cornsilk;
+            background-image: url(library.jpg);
             text-align: center;
+            border-radius: 5px;  
+        }
+        #h1{
+            zoom: 1.5;
+        }
+        #h1{
+        font-size: 50px;
+        font-weight: 100;
+        text-align: center;
+        text-decoration: none;
+        font-family: sans-serif
         }
         #milestone{
             float: right;
@@ -33,40 +45,114 @@
             transition: font-size .5s ease;
         }
         #milestone{
+            position:relative;
+            bottom:  40px;
+        }
+        #search{
+            border: 3px gray-solid;
             position: relative;
-            top: 45px;
+            bottom: 20px;
+            width: 200px;
+            height: 20px;
+        }
+        
+        #b1{
+            position: relative;
+            right: 135px;
+        }
+        #totalresults{
+        font-size: 10px;
+        font-weight: 100;
+        text-decoration: none;
+        font-family: sans-serif;
+        }
+        #h2{
+        font-size: 40px;
+        font-weight: 150;
+        text-align: left;
+        text-decoration: none;
+        font-family: sans-serif
+        }
+        #sub{
+            position:relative;
+            bottom: 15px;
+            width: 100px;
+        }
+        #totalresults{
+            font-size: 40px;
+            text-decoration: underline;
         }
         </style>
 <body>
-    <input placeholder="Type here..." id="search" autofocus="">
+    <form id="searchbar">
+<input id="search" type="text" name="search" placeholder="Type here...">
+    <br>
+<input id="sub" type="button" value="Search">
+    </form>
+
     
-    <button>
-    Click here! </button>
+    <div id="radio" style="text-align: center;">
+    <br>
+        <input id="1" type="radio" name="page" value="1">1
+        <input id="2" type="radio" name="page" value="2">2
+        <input id="3" type="radio" name="page" value="3">3
+        <input id="4" type="radio" name="page" value="4">4
+        <input id="5" type="radio" name="page" value="5">5
+<!--        <input id="6" type="radio" name="page" value="6">6-->
+        
+    </div><br>
+<!--
+    <button id="b1">
+    Click here! 
+    </button>
+-->
 
 <div id="results" style="display: flex; flex-wrap: wrap;"></div>
-    <h2>Here is your results:<span id="totalresults"></span>  
+    <h2 id="h2">Here is your results:<span id="totalresults"></span></h2>
     
-    </h2>
-    
+<script> 
 
-<script>
+$(document).ready(function () {
+	$("#search").keypress(function(event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			$("#sub").click();
+		}
+	});
+	$('#sub, input[type="radio"]').click(function (search) {
+		if (this.id == "#sub") {
+			search.preventDefault();
+		}
+		var term = $("#search").val();
+		var page = document.getElementsByName("page");
+		
+		if (page[0].checked) {
+			var parameter="?q="+term+"&startIndex=0&maxResults=10"; 
+		}
+		else if (page[1].checked) {
+			var parameter="?q="+term+"&startIndex=10&maxResults=10"; 
+		}
+		else if (page[2].checked) {
+			var parameter="?q="+term+"&startIndex=20&maxResults=10"; 
+		}
+		else if (page[3].checked) {
+			var parameter="?q="+term+"&startIndex=30&maxResults=10"; 
+		}
+        else if (page[4].checked) {
+			var parameter="?q="+term+"&startIndex=40&maxResults=10"; 
+		}
 
-    
-    $(document).ready(function(){
-        $("ul").hide();
-    });
-        $("button").click(function(){
-            $("ul").show();
-                $(function(){
-		          var term = document.getElementById('search').value; 
-		          var parameter="?q="+term+"&startIndex=0&maxResults=20"; 
-		          var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
-        $.getJSON(service_point, function (json)
-        {
+		else {
+			var parameter="?q="+term+"&startIndex=0&maxResults=10";
+		}
+		
+		var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
+		$.getJSON(service_point, function (json)
+		{
 			console.log(json);
 			var total=json.totalItems;
 			$("#totalresults").text(total); 
-			
+			$("#radio").css("visibility", "visible");
 			var resultHTML="";
 			for (i in json.items)
 			{
@@ -75,20 +161,27 @@
 				var cover="";
 				if (json.items[i].volumeInfo.imageLinks != null)
 					cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
-
-resultHTML+="<div class='bookdiv'><br>";
-resultHTML+="<br><br><img src='"+cover+"' style='float: left'>";
-resultHTML+="<a href='bookinfo.html?id="+bookid+"'><br>"+booktitle+"</a>";
-resultHTML+="</div>";
+				
+				resultHTML+="<div class='bookdiv'>";
+				resultHTML+="<a href='bookinfo.html?id="+bookid+"'>"+booktitle+"</a>";
+				resultHTML+="<br><br><img src='"+cover+"'/><br>";
+				resultHTML+="</div>";;
+				
 			}
 			$("#results").html(resultHTML); 
-			$(".bookdiv").css("width", "300px");
+            $(".bookdiv").css("width", "300px");
+			
 		});
-    });
-  });
+	});
+});
     
 
 </script>
+    <div id="milestone">
+<a href="Milestone2.html">Milestone 2</a>
+        <br />
+<a href="index.html">Home</a>
+        </div>
  
 </body>
 </html>

@@ -4,9 +4,12 @@
 <head>
 	<title>Google Book Info</title>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <h1 id="h1">Google Book Search</h1>
 	<script>
+    
     $(function(){
-		var id="106490881243714046904"; //or get the parameter value from the URL ?id=Wfan6L9RGgYC; you can Google how to do it.
+        var url = new URL(window.location.href);
+		var id= url.searchParams.get('id');
 		var service_point="https://www.googleapis.com/books/v1/volumes/"+id;
         $.getJSON(service_point, function (json)
         {
@@ -28,15 +31,79 @@
             $("#category").html(resultHTML);
 		}); 
     });
+
 </script>
+    <style>
+        body{
+            color: black;
+            background-color:dimgray;
+            
+        }
+        #h1{
+            text-align: center;
+            font-size: 60px;
+            font-weight: 90;
+            text-decoration: none;
+            font-family: sans-serif
+        }
+        #title{
+            text-align: center;
+            font-size: 50px;
+            text-decoration: none;
+            font-family: sans-serif;
+        }
+        #border{
+            border: 2px solid;
+        }
+        #title{
+            text-align: center;
+            font-size: 40px;
+            font-weight: 90;
+            text-decoration: none;
+            font-family: sans-serif
+        }
+        #webpage{
+            text-align: right;
+        }
+        #category{
+            text-align: center;
+        }
+        P{
+            text-align: center;
+        }
+        #cover{
+            height: 300px;
+            width: 250px;
+            position: relative;
+            left: 505px;
+        }
+        #milestone2{
+            position: relative;
+            top: 15px;
+            left: 590px;
+        }
+        #milestone2:hover{
+            text-transform: uppercase;
+        font-size: 20px;
+        }
+        #milestone2:hover{
+            transition: font-size .5s ease;
+        }
+        
+    </style>
 </head>
 
-<body>
+<body a link="black" vlink="black">
+    <div id="border">
 <h1 id="title"></h1>
 <p><a id="webpage"></a></p>
 <img id="cover" height=200 />
 <p>Categories:</p>
 <div id="category"></div>
-
+</div> 
+   <div id="milestone2"><a href="Milestone2.html" >Milestone 2</a>
+       <br />
+    <a href="index.html">Home</a>
+       </div> 
 </body>
 </html>

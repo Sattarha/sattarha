@@ -8,7 +8,7 @@
 </head>
     <style>
         body{
-            background-color:cornflowerblue;
+            background-color:dimgray;
         }
         #shelf{
             text-align: center;
@@ -19,6 +19,17 @@
         #results{
             margin-left: 250px;
         }
+        #shelf{
+        font-size: 50px;
+        font-weight: 100;
+        text-align: center;
+        text-decoration: none;
+        font-family: sans-serif
+        }
+        #web{
+            
+        }
+       
     </style>
 <script>
     $(function () {
@@ -36,7 +47,7 @@
 
                 resultHTML += "<div class='bookdiv'>";
                 resultHTML += "<img src='" + cover + "' style='float: left' />";
-                resultHTML += "<a href='bookinfo.php?id=" + bookid + "'>" + booktitle + "</a>";
+                resultHTML += "<a href='bookinfo.html?id=" + bookid + "'>" + booktitle + "</a>";
                 resultHTML += "</div>";;
             }
             $("#results").html(resultHTML);
@@ -50,8 +61,10 @@
 <h2 id="shelf">My favorite Books
 </h2>
 <div id="results" style="display: flex; flex-wrap: wrap;"></div>
+<div id="web">
 <a href="Milestone2.html">Milestone 2</a>
     <br />
 <a href="index.html">Home</a>
+    </div>
 </body>
 </html>
