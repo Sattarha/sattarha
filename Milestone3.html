@@ -87,10 +87,15 @@
                }
            });
 
+               $(".page").click(function() {
+                   start = $(this).attr("Index");
+                   pageNumber = $(this).attr("pageNumber");
+                   Books();
+               });
            function Books() {
 
                var term = $("#search").val();
-               var api = "https://www.googleapis.com/books/v1/volumes?q=";
+               var api = "https://www.googleapis.com/books/v1/volumes?q="+term+"&maxResult=10&Index="+page;
 
                $("#result").html("Results: Page " + pageNumber + "<hr noshade>");
                for (i = 0; i < 10; i++) {
@@ -99,11 +104,6 @@
                    $("#result").append('<a href = "javascript:;" class="page" Index = ' + page + ' pageNumber="' + num + '">' + (i + 1) + '</a> &nbsp&nbsp');
                }
 
-               $(".page").click(function() {
-                   start = $(this).attr("Index");
-                   pageNumber = $(this).attr("pageNumber");
-                   Books();
-               });
 
                $("#result").append("<br><br>");
 
