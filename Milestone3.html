@@ -75,7 +75,7 @@
         
        $(document).ready(function() {
 
-           var start = "&Index=0";
+           var start = "&startIndex=0";
            var pageNumber = 1;
 
            $("#sub").on("click", Books);
@@ -87,23 +87,23 @@
                }
            });
 
-               $(".page").click(function() {
-                   start = $(this).attr("Index");
-                   pageNumber = $(this).attr("pageNumber");
-                   Books();
-               });
+              
            function Books() {
 
                var term = $("#search").val();
-               var api = "https://www.googleapis.com/books/v1/volumes?q="+term+"&maxResult=10&Index="+page;
+               var api = "https://www.googleapis.com/books/v1/volumes?q="+term+"&maxResults=10&startIndex"+pageNumber;
 
                $("#result").html("Results: Page " + pageNumber + "<hr noshade>");
                for (i = 0; i < 10; i++) {
-                   var page = "&Index=" + i * 10;
+                   var page = "&startIndex=" + i * 10;
                    var num = i + 1;
-                   $("#result").append('<a href = "javascript:;" class="page" Index = ' + page + ' pageNumber="' + num + '">' + (i + 1) + '</a> &nbsp&nbsp');
+                   $("#result").append('<a href = "javascript:;" class="page" startIndex = ' + page + ' pageNumber="' + num + '">' + (i + 1) + '</a> &nbsp&nbsp');
                }
-
+                $(".page").click(function() {
+                   start = $(this).attr("startIndex");
+                   pageNumber = $(this).attr("pageNumber");
+                   Books();
+               });
 
                $("#result").append("<br><br>");
 
