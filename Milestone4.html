@@ -5,187 +5,182 @@
     <meta charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.js"> </script>
-    <a href="index.html">Home</a>
+<!--    <a href="index.html" id="link">Home</a>-->
+    <link rel="stylesheet" href="Milestone4.html">
     <a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px" href="https://unsplash.com/@brandi1?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Brandi Redd"><span style="display:inline-block;padding:2px 3px"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-1px;fill:white" viewBox="0 0 32 32"><title>unsplash-logo</title><path d="M20.8 18.1c0 2.7-2.2 4.8-4.8 4.8s-4.8-2.1-4.8-4.8c0-2.7 2.2-4.8 4.8-4.8 2.7.1 4.8 2.2 4.8 4.8zm11.2-7.4v14.9c0 2.3-1.9 4.3-4.3 4.3h-23.4c-2.4 0-4.3-1.9-4.3-4.3v-15c0-2.3 1.9-4.3 4.3-4.3h3.7l.8-2.3c.4-1.1 1.7-2 2.9-2h8.6c1.2 0 2.5.9 2.9 2l.8 2.4h3.7c2.4 0 4.3 1.9 4.3 4.3zm-8.6 7.5c0-4.1-3.3-7.5-7.5-7.5-4.1 0-7.5 3.4-7.5 7.5s3.3 7.5 7.5 7.5c4.2-.1 7.5-3.4 7.5-7.5z"></path></svg></span><span style="display:inline-block;padding:2px 3px">Brandi Redd</span></a>
+    <style>#result {border: 1px solid black; margin: 1% auto; width: 75%; display: flex; flex-wrap: wrap; justify-content: space-around;} #result .bookdiv {flex-grow:1; width: 100%;} .grid {width: 30% !important;} #bookDetails {margin: 2% auto;}</style>
     </head>
     <style>
         body{
          background-image: url(pic2.jpg);
+            color: #DDDDDD;
+    
+        }
+        #search{
+            left: 50%;
+            border: none;
+            outline: none;
+            transform: translate(-30,-42.5%);
+            border-radius: 45px;
+            padding: 10px;
+            
+        }
+        #h1{
+            font-size:50px;
+            font-weight: 100;
+            text-align: center;
+            font-family: sans-serif;
+            color: #DDDDDD;
+        }
+        #searchbar{
+            text-align: center;
+        }
+        #sub{
+            border-radius: 45px;
+        }
+        #mine{
+            border-radius: 45%;
+            padding: 4px;
+        }
+        #link{
+            color: #DDDDDD;
+        }
+        a{
+            color:#DDDDDD;
+        }
+        #changeView{
+            border-radius: 45%;
+            padding: 5.5px;
+        }
+        #bookshelf{
+          flex-wrap:wrap;
+            justify-content: center;
         }
     
     
     </style>
 <body>
-   
-    <h1>Milestone 4</h1>
-       <form id="searchbar">
-            
-            <input id="search" type="text" name="search" placeholder="Please type here to find your book..." size="32">
-            <input id="sub" type="button" value="Search" size="100">
-            <input id="mine" type="button" value="My Shelfbook">
-            
-            <p id="result"></p>
-    </form>
-    <br> 
-    
-    </body>
-    <script type="text/javascript">
-        
-       $(document).ready(function() {
-
-           var start = "&startIndex=0";
-           var pageNumber = 1;
-
-           $("#sub").on("click", Books);
-           $("#mine").on("click", Shelf);
-
-           $(document).keypress(function(e) {
-               if (e.which == 13) {
-                   Books();
-               }
-           });
-
-              
-           function Books() {
-
-               var term = $("#search").val();
-               var api = "https://www.googleapis.com/books/v1/volumes?q="+term+"&maxResults=10&startIndex"+pageNumber;
-
-               $("#result").html("Results: Page " + pageNumber + "<hr noshade>");
-               for (i = 0; i < 10; i++) {
-                   var page = "&startIndex=" + i * 10;
-                   var num = i + 1;
-                   $("#result").append('<a href = "javascript:;" class="page" startIndex = ' + page + ' pageNumber="' + num + '">' + (i + 1) + '</a> &nbsp&nbsp');
-               }
-                $(".page").click(function() {
-                   start = $(this).attr("startIndex");
-                   pageNumber = $(this).attr("pageNumber");
-                   Books();
-               });
-
-               $("#result").append("<br><br>");
-
-               var service_request = api + term + start;
-
-               $.getJSON(service_request, function(json) {
-
-                   var length = json.items.length;
-                   for (i = 0; i < length; i++) {
-                       var title = json.items[i].volumeInfo.title;
-                       if (json.items[i].volumeInfo.subtitle != null) {
-                           var subtitle = " - " + json.items[i].volumeInfo.subtitle;
-                       } else {
-                           var subtitle = "";
-                       }
-                       if (json.items[i].volumeInfo.imageLinks != null) {
-                           var pic = '' + json.items[i].volumeInfo.imageLinks.smallThumbnail;
-                       } else {
-                           var pic = "no image.png";
-                       }
-                       var id = json.items[i].id;
-                       $("#result").append('<div id="b' + i + '" class="bookdiv" style = "margin-bottom: 5px; clear: both;"></div>');
-                       $("#b" + i).html('<a href ="javascript:;" class = "booktitle" bookid ="' + id + '" divid="b' + i + '">' + title + subtitle + "</a><br>");
-                       $("#b" + i).append('<img style="float:center; margin: 4px; clear:both;" src="' + pic + '"alt="thumbnail picture of the book."/>');
-                   }
-                   $(".booktitle").click(function() {
-                       var bookid = $(this).attr("bookid");
-                       var divNum = $(this).attr("divid");
-
-                       getBookInfo(divNum, bookid);
-                   });
-               });
-           }
-
-           function Shelf() {
-
-               var my_shelf = "https://www.googleapis.com/books/v1/users/106490881243714046904/bookshelves/1001/volumes";
-
-               $.getJSON(my_shelf, function(json) {
-
-                   var length = json.items.length;
-                   $("#result").html("My Bookshelf <br>");
-
-                   for (i = 0; i < length; i++) {
-                       var title = json.items[i].volumeInfo.title;
-                       if (json.items[i].volumeInfo.subtitle != null) {
-                           var subtitle = " - " + json.items[i].volumeInfo.subtitle;
-                       } else {
-                           var subtitle = "";
-                       }
-                       if (json.items[i].volumeInfo.imageLinks != null) {
-                           var pic = '' + json.items[i].volumeInfo.imageLinks.smallThumbnail;
-                       } else {
-                           var pic = "no image.png";
-                       }
-                       var id = json.items[i].id;
-                       $("#result").append('<div id="b' + i + '" class="bookdiv" style = "margin-bottom: 5px; clear: both;"></div>');
-                       $("#b" + i).html('<a href ="javascript:;" class = "booktitle" bookid ="' + id + '" divid="b' + i + '">' + title + subtitle + "</a><br>");
-                       $("#b" + i).append('<img style="float:center; margin: 4px; clear:both;" src="' + pic + '"alt="thumbnail picture of the book."/>');
-                   }
-                   $(".booktitle").click(function() {
-                       var bookid = $(this).attr("bookid");
-                       var divNum = $(this).attr("divid");
-                       getBookInfo(divNum, bookid);
-                   });
-               });
-           }
-
-           function getBookInfo(divNum, bookid) {
-               var service_request = "https://www.googleapis.com/books/v1/volumes/" + bookid;
-               var result = $("#" + divNum);
-
-
-               $.getJSON(service_request, function(json) {
-
-                   var pics = json.volumeInfo.imageLinks;
-                   var pic = '';
-                   if (pics.small != null) {
-                       pic = pics.small;
-                   } else if (pics.thumbnail != null) {
-                       pic = pics.thumbnail;
-                   } else {
-                       pic = 'no image.png';
-                   }
-
-                   var title = json.volumeInfo.title;
-                   var subtitle = json.volumeInfo.subtitle;
-                   if (json.volumeInfo.authors != null) {
-                       var authors = json.volumeInfo.authors;
-                   } else {
-                       var authors = ["none"];
-                   }
-                   var publisher = json.volumeInfo.publisher;
-                   var publishDate = json.volumeInfo.publishedDate;
-                   var desc = json.volumeInfo.description;
-                   var isbn = json.volumeInfo.industryIdentifiers[0].identifier;
-                   var isbn13 = json.volumeInfo.industryIdentifiers[1].identifier;
-                   var pageCount = json.volumeInfo.pageCount;
-                   var avgRating = json.volumeInfo.averageRating;
-                   var infoLink = json.volumeInfo.previewLink;
-                   var tab = "&nbsp&nbsp&nbsp&nbsp&nbsp";
-
-                   result.html("<hr noshade>");
-                   result.append('<div id = "div' + divNum + '" class="bookdatadiv" ><div>');
-                   var inner = $('#div' + divNum);
-                   inner.html("<img style=\"float:left; margin: 10px;\" src=\"" + pic + "\"alt=\"Book Cover Picture.\">");
-                   inner.append("<strong>Title: </strong><a target = \"_blank\" href = \"" + infoLink + "\">" + title + "</a><br>");
-                   inner.append("<strong>Subtitle: </strong>" + subtitle + "<br>");
-                   inner.append("<strong>Author(s): </strong>" + authors[0] + "</br>");
-                   for (i = 1; i < authors.length; i++) {
-                       inner.append(tab + authors[i] + "<br>");
-                   }
-                   inner.append("<strong>Publisher: </strong>" + publisher + "<br>");
-                   inner.append("<strong>Date Published: </strong>" + publishDate + "<br>");
-                   inner.append("<strong>Description: </strong>" + desc + "<br>");
-                   inner.append("<strong>ISBN: </strong>" + isbn + "<br>");
-                   inner.append("<strong>ISBN_13: </strong>" + isbn13 + "<br>");
-                   inner.append("<strong>Page Count: </strong>" + pageCount + "<br>");
-                   inner.append("<strong>Average Rating: </strong>" + avgRating + "<br>");
-                   inner.append("<strong>Google Books Link: </strong><a target = \"_blank\" href = \"" + infoLink + "\">" + infoLink + "</a><br>");
-                   result.append("<hr noshade style='clear:both'><br>");
-               });
-           }
-       });
-    
-    </script>
+<a href="https://sattarha.github.io/sattarha/index.html">Home</a>
+	<h1 id="h1">Milestone 4</h1>
+	<form id="searchbar">
+		<input id="search" type="text" name="search" placeholder="Please type here to find your book..." size="32">
+		<input id="sub" type="button" value="Search" size="100">
+		<input id="mine" type="button" value="Show/Hide My Bookshelf">
+		<input id="changeView" type="button" value="Change Results View">
+	</form>
+	<div id="bookDetails" style="display: none;"></div>
+	<div id="bookshelf"></div>
+	<div id="pages"></div>
+	<div id="result"></div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var start = "&startIndex=0";
+			var pageNumber = 1;
+			$("#sub").on("click", Books);
+			$("#mine").on("click", Shelf);
+			
+			$(document).keypress(function(e) {
+				if (e.which == 13) {
+					Books();
+				}
+			});
+			
+			
+			function Books() {
+				$("#bookshelf").hide();
+				var term = $("#search").val();
+				var api = "https://www.googleapis.com/books/v1/volumes?q="+term+"&maxResults=10&startIndex"+pageNumber;
+				$("#pages").html("Results: Page " + pageNumber + "<hr noshade>");
+				for (i = 0; i < 10; i++) {
+					var page = "&startIndex=" + i * 10;
+					var num = i + 1;
+					$("#pages").append('<a href = "javascript:;" class="page" startIndex = ' + page + ' pageNumber="' + num + '">' + (i + 1) + '</a>  ');
+				}
+				$(".page").click(function() {
+					start = $(this).attr("startIndex");
+					pageNumber = $(this).attr("pageNumber");
+					Books();
+				});
+          // $("#result").append("<br><br>");
+          var service_request = api + term + start;
+          $.getJSON(service_request, function(json) {
+          	var length = json.items.length;
+          	for (i = 0; i < length; i++) {
+          		var id = json.items[i].id;
+          		var template = '<div id="b' + i + '" class="bookdiv" style = "margin-bottom: 5px;"><a id="'+id+'" href ="javascript:;" class="booktitle">{{volumeInfo.title}}-{{volumeInfo.subtitle}}</a><img style="float:left; margin: 4px;" src="{{volumeInfo.imageLinks.thumbnail}}" alt="thumbnail picture of the book."/></div>';
+          		$("#result").append(Mustache.to_html(template, json.items[i]));
+          	}
+          	$(".booktitle").click(function() {getBookInfo(this.id);});
+          	$("#result").css({"display":"flex"});
+          });
+      }
+      
+      function Shelf() {
+      	if($("#bookshelf").css('display')=="flex") { $("#bookshelf").hide(); return; }
+      	$("#bookshelf").empty();
+      	var my_shelf = "https://www.googleapis.com/books/v1/users/106490881243714046904/bookshelves/1001/volumes";
+      	$.getJSON(my_shelf, function(json) {
+      		for (i = 0; i < json.items.length; i++) {
+      			var item = json.items[i];
+      			var id = item.id;
+      			var template =  '<div class="bookdiv" style = "margin-bottom: 10px;"><a href ="javascript:;" class="booktitle" id="{{id}}">{{volumeInfo.title}}-{{volumeInfo.subtitle}}</a><img style="float:left;" src="{{volumeInfo.imageLinks.thumbnail}}" alt="thumbnail picture of the book."/></div>';
+      			$("#bookshelf").append(Mustache.to_html(template, item));
+      		}
+      		$("#bookshelf").on("click", ".booktitle", function(){getBookInfo(this.id);});
+      		$("#bookshelf").css({"display":"flex"});
+      	});
+      }
+      
+      function getBookInfo(bookid) {
+      	var service_request = "https://www.googleapis.com/books/v1/volumes/" + bookid;
+      	$.getJSON(service_request, function(json) {
+      		var pics = json.volumeInfo.imageLinks;
+      		var pic = '';
+      		if (pics.small != null) pic = pics.small;
+      		else if (pics.thumbnail != null) pic = pics.thumbnail;
+      		else pic = 'no image.png';
+      		
+      		if (json.volumeInfo.authors != null) var authors = json.volumeInfo.authors;
+      		else var authors = ["none"];
+      		var template = "<div class='bookdatadiv' ><div>\
+      		<img style='float:left; margin: 10px; max-width: 100%; max-height: 100%;'' src='{{volumeInfo.imageLinks.small}}' alt='Book Cover Picture' width='150' height='200'>\
+      		<strong>Title: </strong><a target = '_blank' href = '{{volumeInfo.previewLink}}'>{{volumeInfo.title}}</a><br>\
+      		<strong>Subtitle: </strong>{{volumeInfo.subtitle}}<br>\
+      		<strong>Author(s): </strong>{{volumeInfo.authors.0}}</br>";
+      		
+      		for (i = 1; i < authors.length; i++) template += authors[i] + "<br>";
+      			
+      			template += "<strong>Publisher: </strong>{{volumeInfo.publisher}}<br>\
+      		<strong>Date Published: </strong>{{volumeInfo.publishDate}}<br>\
+      		<strong>Description: </strong>{{volumeInfo.description}}<br>\
+      		<strong>ISBN: </strong>{{volumeInfo.industryIdentifiers[0].identifier}}<br>\
+      		<strong>ISBN_13: </strong>{{volumeInfo.industryIdentifiers[1].identifier}}<br>\
+      		<strong>Page Count: </strong>{{volumeInfo.pageCount}}<br>\
+      		<strong>Average Rating: </strong>{{volumeInfo.averageRating}}<br>\
+      		<strong>Google Books Link: </strong><a target ='_blank' href ='{{volumeInfo.previewLink}}'>{{volumeInfo.previewLink}}</a><br><hr><br></div></div>";
+      		$("#result").on("click",".booktitle", function() {getBookInfo(this.id);})
+      		
+            // $('#div' + divNum).append(Mustache.to_html(template, json));
+            $("#bookDetails").empty();
+            $("#bookDetails").html(Mustache.to_html(template, json));
+            $("#bookDetails").prepend("<button id='closeDetails'>Close Details</button>");
+            $("#bookDetails").on("click", "#closeDetails", closeDetails);
+            $("#bookDetails").show();
+        });
+      }
+      
+      $("#changeView").click(function() {
+      	$(".bookdiv").toggleClass("grid");
+      	$("#result").toggleClass("resRow");
+      });
+      
+      function closeDetails() {
+      	$("#bookDetails").empty();
+      	$("#bookDetails").hide();
+      }
+  });
+</script>
+</body>
 </html>
+
+
